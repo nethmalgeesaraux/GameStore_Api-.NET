@@ -26,3 +26,4 @@ D:\ASP.NET project\Project 01\GameStore.Api\obj\Debug\net10.0\refint\GameStore.A
 D:\ASP.NET project\Project 01\GameStore.Api\obj\Debug\net10.0\GameStore.Api.pdb
 D:\ASP.NET project\Project 01\GameStore.Api\obj\Debug\net10.0\GameStore.Api.genruntimeconfig.cache
 D:\ASP.NET project\Project 01\GameStore.Api\obj\Debug\net10.0\ref\GameStore.Api.dll
+D:\ASP.NET project\Project 01\GameStore.Api\obj\Debug\net10.0\GameStore.Api.sourcelink.json
