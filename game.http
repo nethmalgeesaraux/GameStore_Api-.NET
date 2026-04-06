@@ -1,2 +1,15 @@
 GET http://localhost:5029/game
 
+###
+GET http://localhost:5029/game/1
+
+###
+POST http://localhost:5029/game
+Content-Type: application/json
+
+{
+    "name": "The Legend of Zelda: Breath of the Wild",
+    "genre": "Action-adventure",
+    "price": 59.99,
+    "releaseDate": "2017-03-03"
+}
