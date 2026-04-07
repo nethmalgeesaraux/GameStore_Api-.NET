@@ -34,7 +34,15 @@ app.MapGet("/game", () => games);
 
 
 //Get /game/{id}
-app.MapGet("/game/{id}", (int id) =>games.Find(games => games.Id == id))
+app.MapGet("/game/{id}", (int id) =>
+{
+    var game = games.FirstOrDefault(games => games.Id == id);
+    if (game is null)
+    {
+        return Results.NotFound();
+    }
+    return Results.Ok(game);
+})
     .WithName(GetGameEndpointName);
 
 //Post /game
