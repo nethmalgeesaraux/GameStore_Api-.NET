@@ -8,7 +8,7 @@ POST http://localhost:5029/game
 Content-Type: application/json
 
 {
-    "name": "The Legend of Zelda: Breath of the Wild",
+    "name": "",
     "genre": "Action-adventure",
     "price": 59.99,
     "releaseDate": "2017-03-08"
