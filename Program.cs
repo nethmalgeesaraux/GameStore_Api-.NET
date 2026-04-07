@@ -64,6 +64,11 @@ app.MapPut("/game/{id}", (int id, UpdateGameDto updatedGame) =>
 {
   var index = games.FindIndex(games => games.Id == id);
 
+    if (index == -1)
+    {
+        return Results.NotFound();
+    }
+
   games[index] = new GameDto(
         id,
         updatedGame.Name,
