@@ -9,7 +9,7 @@ public class Genre
 
     public required String Name { get; set; }
 
-    public Genre? Genre { get; set; }
+    public Genre? Gen { get; set; }
 
     public int GenreId { get; set; }
 
