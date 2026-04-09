@@ -1,6 +1,9 @@
 GET http://localhost:5029/game
 
 ###
+GET http://localhost:5029/genres
+
+###
 GET http://localhost:5029/game/4
 
 ###

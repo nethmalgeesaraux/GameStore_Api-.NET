@@ -23,6 +23,17 @@ public static class DataExtension
             connString,
             optionsAction: Options => Options.UseSeeding((context, _) =>
             {
+                if (!context.Set<Genre>().Any())
+                {
+                    context.Set<Genre>().AddRange(
+                        new Genre { Name = "Action" },
+                        new Genre { Name = "Platformer" },
+                        new Genre { Name = "Roleplaying" }
+                    );
+
+                    context.SaveChanges();
+                }
+
                 if (!context.Set<GameModel>().Any())
                 {
                     context.Set<GameModel>().AddRange(
