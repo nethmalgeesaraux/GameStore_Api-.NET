@@ -8,13 +8,14 @@ POST http://localhost:5029/game
 Content-Type: application/json
 
 {
-    "name": "",
-    "genre": "Action-adventure",
+    "name": "The Legend of Zelda",
+    "genreId": "3",
     "price": 59.99,
     "releaseDate": "2017-03-08"
 }
 
 ###
+
 PUT http://localhost:5029/game/1
 Content-Type: application/json
 
