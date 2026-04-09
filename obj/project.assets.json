@@ -2399,7 +2399,7 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\User\\.nuget\\packages\\": {}
+    "d:\\ASP.NET project\\Project 01\\GameStore.Api\\.dotnet\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
@@ -2407,7 +2407,7 @@
       "projectUniqueName": "D:\\ASP.NET project\\Project 01\\GameStore.Api\\GameStore.Api.csproj",
       "projectName": "GameStore.Api",
       "projectPath": "D:\\ASP.NET project\\Project 01\\GameStore.Api\\GameStore.Api.csproj",
-      "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+      "packagesPath": "d:\\ASP.NET project\\Project 01\\GameStore.Api\\.dotnet\\.nuget\\packages\\",
       "outputPath": "D:\\ASP.NET project\\Project 01\\GameStore.Api\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [

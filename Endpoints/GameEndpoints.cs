@@ -1,95 +1,95 @@
 
+using GameStore.Api.Data;
 using GameStore.Api.Dtos;
+using GameStore.Api.Models;
 
 namespace GameStore.Api.Endpoints;
 
 public static class GameEndpoints
 {
     const string GetGameEndpointName = "GetName";
-    private static readonly List<GameDto> games = [
-     new (
-        1,
-        "The Legend of Zelda: Breath of the Wild",
-        "Action-Adventure",
-        59.99m,
-        new DateOnly(2017, 3, 3)),
 
-    new (
-        2,
-        "God of War",
-        "Action-Adventure",
-        49.99m,
-        new DateOnly(2018, 4, 20)),
-
-    new (
-        3,
-        "Red Dead Redemption 2",
-        "Action-Adventure",
-        59.99m,
-        new DateOnly(2018, 10, 26)),
-
-];
-
- public static void MapGameEndpoints(this WebApplication app)
+    public static void MapGameEndpoints(this WebApplication app)
     {
         var group = app.MapGroup("/game");
 
         //Get /game
-        group.MapGet("/", () => games);
+        group.MapGet("/", (GameStoreContext dbContext) =>
+            dbContext.Games
+                .Select(game => game.ToDto())
+                .ToList());
 
 
         //Get /game/{id}
-        group.MapGet("/{id}", (int id) =>
+        group.MapGet("/{id}", (int id, GameStoreContext dbContext) =>
         {
-            var game = games.FirstOrDefault(games => games.Id == id);
+            var game = dbContext.Games.Find(id);
             if (game is null)
             {
                 return Results.NotFound();
             }
-            return Results.Ok(game);
+            return Results.Ok(game.ToDto());
         })
             .WithName(GetGameEndpointName);
 
         //Post /game
-        group.MapPost("/", (CreateGameDto newGame) =>
+        group.MapPost("/", (CreateGameDto newGame, GameStoreContext dbContext) =>
         {
-            GameDto game = new(
-          games.Count + 1,
-          newGame.Name,
-          newGame.Genre,
-          newGame.Price,
-          newGame.ReleaseDate
-      );
-            games.Add(game);
-            return Results.CreatedAtRoute(GetGameEndpointName, new { id = game.Id }, game);
+            GameModel game = new ()
+            {
+                Name = newGame.Name,
+                GenreId = newGame.GenreId,
+                Price = newGame.Price,
+                ReleaseDate = newGame.ReleaseDate
+            };
+            dbContext.Games.Add(game);
+            dbContext.SaveChanges();
+            
+            return Results.CreatedAtRoute(GetGameEndpointName, new { id = game.Id }, game.ToDto());
         });
 
         //Put /game/{id}
-        group.MapPut("/{id}", (int id, UpdateGameDto updatedGame) =>
+        group.MapPut("/{id}", (int id, UpdateGameDto updatedGame, GameStoreContext dbContext) =>
         {
-            var index = games.FindIndex(games => games.Id == id);
-
-            if (index == -1)
+            var existingGame = dbContext.Games.Find(id);
+            if (existingGame is null)
             {
                 return Results.NotFound();
             }
 
-            games[index] = new GameDto(
-          id,
-          updatedGame.Name,
-          updatedGame.Genre,
-          updatedGame.Price,
-          updatedGame.ReleaseDate
-      );
+            existingGame.Name = updatedGame.Name;
+            existingGame.GenreId = updatedGame.GenreId;
+            existingGame.Price = updatedGame.Price;
+            existingGame.ReleaseDate = updatedGame.ReleaseDate;
+
+            dbContext.SaveChanges();
+
             return Results.NoContent();
         });
 
         //Delete /game/{id}
-        group.MapDelete("/{id}", (int id) =>
+        group.MapDelete("/{id}", (int id, GameStoreContext dbContext) =>
         {
-            games.RemoveAll(games => games.Id == id);
+            var game = dbContext.Games.Find(id);
+            if (game is null)
+            {
+                return Results.NotFound();
+            }
+
+            dbContext.Games.Remove(game);
+            dbContext.SaveChanges();
+
             return Results.NoContent();
         });
     }
 
+    private static GameDto ToDto(this GameModel game)
+    {
+        return new GameDto(
+            game.Id,
+            game.Name,
+            game.GenreId,
+            game.Price,
+            game.ReleaseDate);
+    }
 }

@@ -17,6 +17,8 @@ public static class DataExtension
     {
         var connString = builder.Configuration.GetConnectionString("GameStore");
 
+        // builder.Services.AddScoped<GameStoreContext>();
+        
         builder.Services.AddSqlite<GameStoreContext>(
             connString,
             optionsAction: Options => Options.UseSeeding((context, _) =>
@@ -24,9 +26,27 @@ public static class DataExtension
                 if (!context.Set<GameModel>().Any())
                 {
                     context.Set<GameModel>().AddRange(
-                        new GameModel { Name = "The Legend of Zelda: Breath of the Wild" },
-                        new GameModel { Name = "Super Mario Odyssey" },
-                        new GameModel { Name = "Red Dead Redemption 2" }
+                        new GameModel
+                        {
+                            Name = "The Legend of Zelda: Breath of the Wild",
+                            GenreId = 1,
+                            Price = 59.99m,
+                            ReleaseDate = new DateOnly(2017, 3, 3)
+                        },
+                        new GameModel
+                        {
+                            Name = "Super Mario Odyssey",
+                            GenreId = 2,
+                            Price = 49.99m,
+                            ReleaseDate = new DateOnly(2017, 10, 27)
+                        },
+                        new GameModel
+                        {
+                            Name = "Red Dead Redemption 2",
+                            GenreId = 3,
+                            Price = 59.99m,
+                            ReleaseDate = new DateOnly(2018, 10, 26)
+                        }
                     );
 
                     context.SaveChanges();
